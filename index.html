@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Azure Chronicle</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="bg"></div>
+
+    <main class="app">
+      <section id="settingPicker" class="panel setting-picker">
+        <h1>Выбери линию судьбы</h1>
+        <p class="muted">Перед стартом выбери мир истории. Это влияет на стиль событий и выборов.</p>
+        <div id="settingCards" class="setting-cards"></div>
+        <div class="row">
+          <button id="startRunBtn">Начать путь</button>
+          <span id="settingStatus" class="muted"></span>
+        </div>
+      </section>
+
+      <section class="panel status-board">
+        <div class="status-head">STATUS</div>
+        <div class="status-grid" id="stats"></div>
+      </section>
+
+      <section class="panel ai-panel">
+        <h2>AI рассказчик (быстрые модели)</h2>
+        <div class="api-grid">
+          <label>API Base URL <input id="apiBase" placeholder="https://openrouter.ai/api/v1" /></label>
+          <label>Model <input id="apiModel" placeholder="meta-llama/llama-3.2-3b-instruct:free" /></label>
+          <label>API Key <input id="apiKey" type="password" placeholder="sk-or-v1-..." /></label>
+        </div>
+        <div class="row">
+          <button id="saveApiBtn">Сохранить</button>
+          <button id="findFastFreeModelBtn" class="ghost">Подобрать быструю free</button>
+          <button id="testApiBtn" class="ghost">Проверить AI</button>
+          <button id="newRunBtn" class="ghost">Новый путь</button>
+          <span id="apiStatus" class="muted"></span>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Хроника</h2>
+        <div id="log" class="log"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Решения</h2>
+        <div id="choices" class="choices"></div>
+        <div class="row">
+          <input id="customAction" placeholder="Например: попросить древнего наставника открыть печать" />
+          <button id="customActionBtn">Выполнить</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="game.js"></script>
+  </body>
+</html>

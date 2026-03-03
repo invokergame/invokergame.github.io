@@ -14,8 +14,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const baseUrl = process.env.PONY_ALPHA_BASE_URL || 'https://api.openai.com/v1';
-    const model = process.env.PONY_ALPHA_MODEL || 'pony-alpha';
+    const baseUrl = process.env.PONY_ALPHA_BASE_URL || 'https://openrouter.ai/api/v1';
+    const model = process.env.PONY_ALPHA_MODEL || 'openrouter/pony-alpha';
+    const referer = process.env.OPENROUTER_REFERER;
+    const title = process.env.OPENROUTER_TITLE || 'Awakening System LitRPG';
 
     const messages = [
       { role: 'system', content: systemPrompt },
@@ -23,12 +25,21 @@ export async function POST(request: Request) {
       { role: 'user', content: message }
     ];
 
-    const res = await fetch(`${baseUrl}/chat/completions`, {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`
+    };
+
+    if (referer) {
+      headers['HTTP-Referer'] = referer;
+      headers['X-Title'] = title;
+    }
+
+    const normalizedBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+
+    const res = await fetch(`${normalizedBaseUrl}/chat/completions`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`
-      },
+      headers,
       body: JSON.stringify({
         model,
         temperature: 0.8,
